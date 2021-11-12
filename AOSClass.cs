@@ -138,7 +138,7 @@ namespace ProjectFullCIL
 
             try
             {
-                EjecutarComando(@"C:\Program Files\Microsoft Dynamics AX\60\Server\TEST-ARCHIVE\bin", "rmdir /s /q \"C:\\Program Files\\Microsoft Dynamics AX\\60\\Server\\TEST-ARCHIVE\\bin\\XppIL\"");
+                EjecutarComando(@"C:\Program Files\Microsoft Dynamics AX\60\Server\GIAX2012_PROD\bin", "rmdir /s /q \"C:\\Program Files\\Microsoft Dynamics AX\\60\\Server\\GIAX2012_PROD\\bin\\XppIL\"");
                 Console.WriteLine("Se ha eliminado la carpeta XppIL del server donde corrió el FULL CIL");
             }
             catch (Exception)
@@ -165,10 +165,11 @@ namespace ProjectFullCIL
                     try
                     {
                         Directory.Delete(@"\\" + strArray[index] + @"\bin\XppIL", true);
+                        Console.WriteLine("Se ha eliminado la carpeta XppIL de " + strArray[index]);
                     }
                     catch (Exception)
                     {
-                        Console.WriteLine("No se puedo eliminar la carpeta XppIL");
+                        Console.WriteLine("No se pudo eliminar la carpeta XppIL");
                         throw;
                     }
                 }
@@ -178,7 +179,7 @@ namespace ProjectFullCIL
         /// <summary>
         /// Paso 6 Levanta todos y cada uno de los servidores
         /// </summary>
-        public void LevantarAOSEnCascada()
+        public void LevantarAOSEnCascada(string mainAOS)
         {
             Console.WriteLine("||||||||||||||||||||||||||||||\n" +
                               "||||||||||||PASO 6||||||||||||\n" +
@@ -188,20 +189,48 @@ namespace ProjectFullCIL
 
             Console.WriteLine("Se levantarán en cascada los servicios de AOS");
 
-            for (int index = 0; index < strArray.Length; ++index)
+            try
             {
-                try
+                ServiceController serviceController = new ServiceController(name, mainAOS);
+                if (serviceController.Status == ServiceControllerStatus.Stopped)
                 {
-                    ServiceController serviceController = new ServiceController(name, strArray[index]);
                     serviceController.Start();
-                    Console.WriteLine(strArray[index] + " - " + serviceController.Status.ToString());
+                    Console.WriteLine(mainAOS + " - " + serviceController.Status.ToString());
                     serviceController.WaitForStatus(ServiceControllerStatus.Running);
-                    Console.WriteLine(strArray[index] + " - " + serviceController.Status.ToString());
-                }
-                catch
+                    Console.WriteLine(mainAOS + " - " + serviceController.Status.ToString());
+                } else
                 {
-                    Console.WriteLine(strArray[index] + " no se pudo levantar");
+                    Console.WriteLine(mainAOS + " - " + serviceController.Status.ToString());
                 }
+                
+                for (int index = 0; index < strArray.Length; ++index)
+                {
+                    if (!mainAOS.Equals(strArray[index]))
+                    {
+                        try
+                        {
+                            ServiceController serviceController1 = new ServiceController(name, strArray[index]);
+                            if (serviceController1.Status == ServiceControllerStatus.Stopped)
+                            {
+                                serviceController1.Start();
+                                Console.WriteLine(strArray[index] + " - " + serviceController1.Status.ToString());
+                                serviceController1.WaitForStatus(ServiceControllerStatus.Running);
+                                Console.WriteLine(strArray[index] + " - " + serviceController1.Status.ToString());
+                            } else
+                            {
+                                Console.WriteLine(strArray[index] + " - " + serviceController1.Status.ToString());
+                            }
+                        }
+                        catch
+                        {
+                            Console.WriteLine(strArray[index] + " no se pudo levantar");
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                Console.WriteLine(mainAOS + " no se pudo levantar");
             }
         }
 

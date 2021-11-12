@@ -23,7 +23,7 @@ namespace ProjectFullCIL
                                   "3 = Detener el AOS indicado anteriormente \n" +
                                   "4 = Eliminar el XppIL del AOS indicado anteriormente \n" +
                                   "5 = Eliminar los demás XppIL \n" +
-                                  "6 = Levantar servicios de AOS en Casada");
+                                  "6 = Levantar servicios de AOS en Cascada");
 
                 string startIn = Console.ReadLine();
 
@@ -33,28 +33,32 @@ namespace ProjectFullCIL
                         //PASO 1
                         aos.DetenerAOSMenosMain(mainAOS);
                         //PASO 2
-                        aos.EjecutarFullCIL();
-                        //PASO 3
-                        aos.DetenerAOSEspecifico(mainAOS);
-                        //PASO 4
-                        aos.EliminarXppILEspecifico();
-                        //PASO 5
-                        aos.EliminarDemasXppIL(mainAOS);
-                        //PASO 6
-                        aos.LevantarAOSEnCascada();
+                        if (aos.EjecutarFullCIL() == 1)
+                        {
+                            //PASO 3
+                            aos.DetenerAOSEspecifico(mainAOS);
+                            //PASO 4
+                            aos.EliminarXppILEspecifico();
+                            //PASO 5
+                            aos.EliminarDemasXppIL(mainAOS);
+                            //PASO 6
+                            aos.LevantarAOSEnCascada(mainAOS);
+                        }
                         break;
 
                     case "2":
                         //PASO 2
-                        aos.EjecutarFullCIL();
-                        //PASO 3
-                        aos.DetenerAOSEspecifico(mainAOS);
-                        //PASO 4
-                        aos.EliminarXppILEspecifico();
-                        //PASO 5
-                        aos.EliminarDemasXppIL(mainAOS);
-                        //PASO 6
-                        aos.LevantarAOSEnCascada();
+                        if (aos.EjecutarFullCIL() == 1)
+                        {
+                            //PASO 3
+                            aos.DetenerAOSEspecifico(mainAOS);
+                            //PASO 4
+                            aos.EliminarXppILEspecifico();
+                            //PASO 5
+                            aos.EliminarDemasXppIL(mainAOS);
+                            //PASO 6
+                            aos.LevantarAOSEnCascada(mainAOS);
+                        }
                         break;
 
                     case "3":
@@ -65,7 +69,7 @@ namespace ProjectFullCIL
                         //PASO 5
                         aos.EliminarDemasXppIL(mainAOS);
                         //PASO 6
-                        aos.LevantarAOSEnCascada();
+                        aos.LevantarAOSEnCascada(mainAOS);
                         break;
 
                     case "4":
@@ -74,19 +78,19 @@ namespace ProjectFullCIL
                         //PASO 5
                         aos.EliminarDemasXppIL(mainAOS);
                         //PASO 6
-                        aos.LevantarAOSEnCascada();
+                        aos.LevantarAOSEnCascada(mainAOS);
                         break;
 
                     case "5":
                         //PASO 5
                         aos.EliminarDemasXppIL(mainAOS);
                         //PASO 6
-                        aos.LevantarAOSEnCascada();
+                        aos.LevantarAOSEnCascada(mainAOS);
                         break;
 
                     case "6":
                         //PASO 6
-                        aos.LevantarAOSEnCascada();
+                        aos.LevantarAOSEnCascada(mainAOS);
                         break;
 
                     default:
@@ -102,7 +106,7 @@ namespace ProjectFullCIL
             Console.WriteLine("||||||||||||||||||||||||||||||\n" +
                               "|||||FIN DE MANTENIMIENTO|||||\n" +
                               "||||||||||||||||||||||||||||||");
-            Console.WriteLine("\nPreciona cualquier tecla para salir");
+            Console.WriteLine("\nPresiona cualquier tecla para salir");
             Console.ReadLine();
         }
     }
