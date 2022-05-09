@@ -10,6 +10,7 @@ namespace AutoFullCIL
 
             string msg = "||||||||||||||||||||||||||||||\r\n" +
                          "||||MANTENIMIENTO FULL CIL||||\r\n" +
+                         "||||||||by Axel Vargas||||||||\r\n" +
                          "||||||||||||||||||||||||||||||";
             Console.WriteLine(msg);
             
@@ -43,7 +44,7 @@ namespace AutoFullCIL
                                 "||||||||||||||||||||||||||||||");
 
             Console.WriteLine("\nPresiona tecla ENTER para salir");
-            Console.ReadLine();
+            Console.ReadKey();
         }
     }
 }

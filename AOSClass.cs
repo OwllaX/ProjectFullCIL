@@ -11,12 +11,12 @@ namespace ProjectFullCIL
     {
         //PATH XPPIL @"C:\Program Files\Microsoft Dynamics AX\60\Server\GIAX2012_PROD\bin"
 
-        private readonly string[] strArray = new string[11]
+        private readonly string[] strArray = new string[10]
         {
             /*"TEST-ARCHIVE"*/
             "SJOAOS01",
             "SJOAOS02",
-            "SJOAOS03",
+            //"SJOAOS03",
             "SJOAOS04",
             "SJOAOS05",
             "SJOAOS06",

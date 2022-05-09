@@ -14,12 +14,12 @@ namespace AutoFullCIL
 
         private readonly string name = "AOS60$01";
 
-        private readonly string[] strArray = new string[1]
+        private readonly string[] strArray = new string[10]
         {
-            "TEST-ARCHIVE"/*
+            /*"TEST-ARCHIVE"*/
             "SJOAOS01",
             "SJOAOS02",
-            "SJOAOS03",
+            /*"SJOAOS03",*/
             "SJOAOS04",
             "SJOAOS05",
             "SJOAOS06",
@@ -27,7 +27,7 @@ namespace AutoFullCIL
             "SJOAOS08",
             "SJOAOS09",
             "SJOAOS10",
-            "SJORetailHQ001"*/
+            "SJORetailHQ001"
         };
 
         private string appWorkPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -44,10 +44,8 @@ namespace AutoFullCIL
 
             Console.WriteLine(msg);
 
-            Console.WriteLine("Se incia con detener los otros AOS");
-            msg = msg + "\r\n" + "Se incia con detener los otros AOS";
-
-            
+            Console.WriteLine("Se inicia con detener los otros AOS");
+            msg = msg + "\r\n" + "Se inicia con detener los otros AOS";
 
             for (int index = 0; index < strArray.Length; ++index)
             {
@@ -161,7 +159,7 @@ namespace AutoFullCIL
 
             try
             {
-                ExecuteCommand(@"C:\Program Files\Microsoft Dynamics AX\60\Server\TEST-ARCHIVE\bin", "rmdir /s /q \"C:\\Program Files\\Microsoft Dynamics AX\\60\\Server\\TEST-ARCHIVE\\bin\\XppIL\"");
+                ExecuteCommand(@"C:\Program Files\Microsoft Dynamics AX\60\Server\GIAX2012_PROD\bin", "rmdir /s /q \"C:\\Program Files\\Microsoft Dynamics AX\\60\\Server\\GIAX2012_PROD\\bin\\XppIL\"");
                 Console.WriteLine("Se ha eliminado la carpeta XppIL del server donde corrió el FULL CIL");
                 msg = msg + "\r\n" + "Se ha eliminado la carpeta XppIL del server donde corrió el FULL CIL";
             }
@@ -190,7 +188,7 @@ namespace AutoFullCIL
             Console.WriteLine("Se está iniciando con eliminar los demás XppIL");
             msg = msg + "\r\n" + "Se está iniciando con eliminar los demás XppIL";
 
-            for (int index = 1; index < strArray.Length; ++index)
+            for (int index = 0; index < strArray.Length; index++)
             {
                 if (!mainAOS.Equals(strArray[index]))
                 {
@@ -226,7 +224,7 @@ namespace AutoFullCIL
 
             try
             {
-                SqlConnection sqlConn = new SqlConnection("Data Source=TEST-ARCHIVE;Initial Catalog=GIAX2012_PROD;user=giprod;password=sa");
+                SqlConnection sqlConn = new SqlConnection("Data Source=GIDB00;Initial Catalog=GIAX2012_PROD;user=giprod;password=sa");
                 sqlConn.Open();
 
                 string sql = "BEGIN TRAN DELETE FROM SYSCLIENTSESSIONS COMMIT";
@@ -236,8 +234,8 @@ namespace AutoFullCIL
 
                 if (rowsAffected > 0)
                 {
-                    Console.WriteLine("Se eliminado " + rowsAffected.ToString() + " en la tabla SYSClientSessions en GIAX2012_PROD");
-                    msg = msg + "\r\n" + "Se eliminado " + rowsAffected.ToString() + " en la tabla SYSClientSessions en GIAX2012_PROD";
+                    Console.WriteLine("Se eliminado " + rowsAffected.ToString() + " registros en la tabla SYSClientSessions en GIAX2012_PROD");
+                    msg = msg + "\r\n" + "Se eliminado " + rowsAffected.ToString() + " registros en la tabla SYSClientSessions en GIAX2012_PROD";
                 }
                 else
                 {
