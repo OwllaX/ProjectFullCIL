@@ -14,12 +14,12 @@ namespace AutoFullCIL
 
         private readonly string name = "AOS60$01";
 
-        private readonly string[] strArray = new string[10]
+        private readonly string[] strArray = new string[11]
         {
             /*"TEST-ARCHIVE"*/
             "SJOAOS01",
             "SJOAOS02",
-            /*"SJOAOS03",*/
+            "SJOAOS03",
             "SJOAOS04",
             "SJOAOS05",
             "SJOAOS06",
@@ -47,7 +47,7 @@ namespace AutoFullCIL
             Console.WriteLine("Se inicia con detener los otros AOS");
             msg = msg + "\r\n" + "Se inicia con detener los otros AOS";
 
-            for (int index = 0; index < strArray.Length; ++index)
+            for (int index = 0; index < strArray.Length; index++)
             {
                 if (!mainAOS.Equals(strArray[index]))
                 {
@@ -70,7 +70,14 @@ namespace AutoFullCIL
                         Console.WriteLine("No se pudo bajar el servicio " + strArray[index]);
                         msg = msg + "\r\n" + "No se pudo bajar el servicio " + strArray[index];
                         AppendTextToLOG(msg);
-                        throw;
+                        Console.WriteLine("\nADVERTENCIA: Se recomienda revisar que ocurrió con el servicio de este servidor.");
+                        Console.WriteLine("\nPresiona tecla 0 para deterner la ejecución o presiona cualquier tecla para continuar.");
+
+                        
+                        if (Console.ReadKey(true).KeyChar.ToString().Equals("0"))
+                        {
+                            throw;
+                        }
                     }
                 }
             }
@@ -203,7 +210,13 @@ namespace AutoFullCIL
                         Console.WriteLine("No se pudo eliminar la carpeta XppIL");
                         msg = msg + "\r\n" + "No se ha eliminado la carpeta XppIL de " + strArray[index];
                         AppendTextToLOG(msg);
-                        throw;
+
+                        Console.WriteLine("\r\nADVERTENCIA: Por favor eliminar carpeta manualmente para seguir con la operación.");
+                        Console.WriteLine("\nPresiona tecla 0 para deterner la ejecución o presiona cualquier tecla para continuar.");
+                        if (Console.ReadKey(true).KeyChar.ToString().Equals("0"))
+                        {
+                            throw;
+                        }
                     }
                 }
             }
